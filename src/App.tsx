@@ -3,6 +3,7 @@ import { GameOfLife } from "./GameOfLife";
 import "./style.css"
 import { Canvas } from "@react-three/fiber"
 import World from "./World";
+import { PausePlayButton } from "./PausePlayButton";
 
 export default function App() {
   const width = 200;
@@ -16,7 +17,7 @@ export default function App() {
       <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} style={{ background: "black" }}>
         <GameOfLife world={world} play={play} step={step} />
       </Canvas>
-      <button onClick={() => play.current = !play.current}>play</button>
+      <PausePlayButton play={play} />
       <button onClick={() => world.current.Reset()}>reset</button>
       <button onClick={() => step.current = true}>step</button>
     </div>
