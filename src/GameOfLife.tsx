@@ -2,7 +2,7 @@ import { DataTexture, ShaderMaterial } from "three";
 import Material from "./Material";
 import World from "./World";
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { ThreeEvent, useFrame } from "@react-three/fiber";
 
 export function GameOfLife({ world, play, step }: Readonly<{ world: React.MutableRefObject<World>, play: React.MutableRefObject<boolean>, step: React.MutableRefObject<boolean> }>) {
 
@@ -24,8 +24,16 @@ export function GameOfLife({ world, play, step }: Readonly<{ world: React.Mutabl
         }
     });
 
+    function handleClick(e: ThreeEvent<PointerEvent>)
+    {
+        const x = Math.floor(((e.point.x+1)/2)*world.current.width)
+        const y = Math.floor(((e.point.y+1)/2)*world.current.height);
+        world.current.ToggleCell(x, y);
+
+    }
+
     return (
-        <mesh>
+        <mesh onPointerDown={handleClick}>
             <planeGeometry args={[2, 2]} />
             <Material texture={texture} shaderRef={shaderRef} />
         </mesh>

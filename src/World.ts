@@ -46,12 +46,27 @@ export default class World {
         const y = Math.floor(i / this.width);
         let neighbors = 0;
         const deltas: [number, number][] = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]];
-        deltas.forEach(([dx, dy]) => { if (this.CheckCell(x + dx, y + dy)) { neighbors++; } });
+        deltas.forEach(([dx, dy]) => { if (this.GetCell(x + dx, y + dy)) { neighbors++; } });
         return neighbors;
     }
 
-    CheckCell(x: number, y: number): boolean {
-        return this.prevState[(y % this.height) * this.width + (x % this.width)];
+    GetCell(x: number, y: number): boolean {
+        return this.prevState[this.getIndex(x, y)];
+    }
+
+    SetCell(x: number, y: number, cell: boolean) {
+        this.state[this.getIndex(x, y)] = cell;
+        this.changed = true;
+    }
+
+    ToggleCell(x: number, y: number) {
+        const i = this.getIndex(x, y);
+        this.state[i] = !this.state[i];
+        this.changed = true;
+    }
+
+    getIndex(x: number, y: number): number {
+        return (y % this.height) * this.width + (x % this.width);
     }
 
     GenData() {
