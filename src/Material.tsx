@@ -63,31 +63,8 @@ function CountNeighbors(width: number, height: number, world: boolean[], i: numb
   const x = i % width;
   const y = Math.floor(i / width);
   let neighbors = 0
-  if (CheckCell(width, height, world, x - 1, y + 1)) {
-    neighbors += 1;
-  }
-  if (CheckCell(width, height, world, x, y + 1)) {
-    neighbors += 1;
-  }
-  if (CheckCell(width, height, world, x + 1, y + 1)) {
-    neighbors += 1;
-  }
-  if (CheckCell(width, height, world, x - 1, y)) {
-    neighbors += 1;
-  }
-  if (CheckCell(width, height, world, x + 1, y)) {
-    neighbors += 1;
-  }
-  if (CheckCell(width, height, world, x - 1, y - 1)) {
-    neighbors += 1;
-  }
-  if (CheckCell(width, height, world, x, y - 1)) {
-    neighbors += 1;
-  }
-  if (CheckCell(width, height, world, x + 1, y - 1)) {
-    neighbors += 1;
-  }
-
+  const deltas: [number, number][] = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]];
+  deltas.forEach(([dx, dy]) => {if (CheckCell(width, height, world, x + dx, y + dy)) { neighbors++; }});
   return neighbors;
 }
 
