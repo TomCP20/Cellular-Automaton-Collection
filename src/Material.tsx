@@ -1,20 +1,11 @@
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { DataTexture, ShaderMaterial } from "three";
-import { useFrame } from "@react-three/fiber";
 
 import fragmentShader from "./shaders/fragment.glsl?raw";
 import vertexShader from "./shaders/vertex.glsl?raw";
-import World from "./World";
 
 
-export default function Material() {
-  const width = 200;
-  const height = 200;
-  const world: World = new World(width, height);
-  const texture = new DataTexture(world.GenData(), width, height);
-  texture.needsUpdate = true;
-
-  const myShader = useRef<ShaderMaterial>(null);
+export default function Material({texture, shaderRef}: Readonly<{texture: DataTexture, shaderRef: React.RefObject<ShaderMaterial>}>) {
 
   const uniforms = useMemo(
     () => ({
@@ -23,16 +14,10 @@ export default function Material() {
     }), []
   );
 
-  useFrame(() => {
-    if (myShader.current) {
-      world.Step();
-      myShader.current.uniforms.uTexture.value.image.data = world.GenData();
-      texture.needsUpdate = true;
-    }
-  });
+  
 
   return (<shaderMaterial
-    ref={myShader}
+    ref={shaderRef}
     fragmentShader={fragmentShader}
     vertexShader={vertexShader}
     uniforms={uniforms} />
