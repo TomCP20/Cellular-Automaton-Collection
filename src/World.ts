@@ -3,18 +3,26 @@ export default class World {
     height: number;
     state: boolean[];
     prevState: boolean[];
+    changed: boolean;
     constructor(width: number, height: number) {
         this.width = width;
         this.height = height;
         this.state = this.GenState()
         this.prevState = [];
+        this.changed = true;
+    }
+
+    Reset()
+    {
+        this.state = this.GenState();
+        this.changed = true;
     }
 
     GenState(): boolean[] {
         const size = this.width * this.height;
         const world = [];
         for (let i = 0; i < size; i++) {
-            world[i] = Math.random() >= 0.5
+            world[i] = Math.random() >= 0.5;
         }
         return world;
     }
@@ -24,25 +32,26 @@ export default class World {
         for (let i = 0; i < this.state.length; i++) {
             const neighbors = this.CountNeighbors(i);
             if (this.prevState[i]) {
-                this.state[i] = neighbors == 2 || neighbors == 3
+                this.state[i] = neighbors == 2 || neighbors == 3;
             }
             else {
-                this.state[i] = neighbors == 3
+                this.state[i] = neighbors == 3;
             }
         }
+        this.changed = true;
     }
 
     CountNeighbors(i: number): number {
         const x = i % this.width;
         const y = Math.floor(i / this.width);
-        let neighbors = 0
+        let neighbors = 0;
         const deltas: [number, number][] = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]];
         deltas.forEach(([dx, dy]) => { if (this.CheckCell(x + dx, y + dy)) { neighbors++; } });
         return neighbors;
     }
 
     CheckCell(x: number, y: number): boolean {
-        return this.prevState[(y % this.height) * this.width + (x % this.width)]
+        return this.prevState[(y % this.height) * this.width + (x % this.width)];
     }
 
     GenData() {
