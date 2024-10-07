@@ -1,15 +1,17 @@
 import { useMemo, useRef } from "react";
 import { DataTexture, ShaderMaterial } from "three";
+import { useFrame } from "@react-three/fiber";
 
 import fragmentShader from "./shaders/fragment.glsl?raw";
 import vertexShader from "./shaders/vertex.glsl?raw";
-import { useFrame } from "@react-three/fiber";
+import World from "./World";
+
 
 export default function Material() {
   const width = 200;
   const height = 200;
-  const world: boolean[] = GenWorld(width, height);
-  const texture = new DataTexture(GenData(world), width, height);
+  const world: World = new World(width, height);
+  const texture = new DataTexture(world.GenData(), width, height);
   texture.needsUpdate = true;
 
   const myShader = useRef<ShaderMaterial>(null);
@@ -23,8 +25,8 @@ export default function Material() {
 
   useFrame(() => {
     if (myShader.current) {
-      StepWorld(width, height, world);
-      myShader.current.uniforms.uTexture.value.image.data = GenData(world);
+      world.Step();
+      myShader.current.uniforms.uTexture.value.image.data = world.GenData();
       texture.needsUpdate = true;
     }
   });
@@ -35,59 +37,4 @@ export default function Material() {
     vertexShader={vertexShader}
     uniforms={uniforms} />
   );
-}
-
-function GenWorld(width: number, height: number): boolean[] {
-  const size = width * height;
-  const world = [];
-  for (let i = 0; i < size; i++) {
-    world[i] = Math.random() >= 0.5
-  }
-  return world;
-}
-
-function StepWorld(width: number, height: number, world: boolean[]) {
-  const oldWorld = world.slice()
-  for (let i = 0; i < world.length; i++) {
-    const neighbors = CountNeighbors(width, height, oldWorld, i);
-    if (oldWorld[i]) {
-      world[i] = neighbors == 2 || neighbors == 3
-    }
-    else {
-      world[i] = neighbors == 3
-    }
-  }
-}
-
-function CountNeighbors(width: number, height: number, world: boolean[], i: number): number {
-  const x = i % width;
-  const y = Math.floor(i / width);
-  let neighbors = 0
-  const deltas: [number, number][] = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]];
-  deltas.forEach(([dx, dy]) => {if (CheckCell(width, height, world, x + dx, y + dy)) { neighbors++; }});
-  return neighbors;
-}
-
-function CheckCell(width: number, height: number, world: boolean[], x: number, y: number): boolean {
-  return world[(y % height) * width + (x % width)]
-}
-
-function GenData(world: boolean[]) {
-  const data = new Uint8Array(4 * world.length);
-  for (let i = 0; i < world.length; i++) {
-    const stride = i * 4;
-    if (world[i]) {
-      data[stride] = 255;
-      data[stride + 1] = 255;
-      data[stride + 2] = 255;
-      data[stride + 3] = 255;
-    }
-    else {
-      data[stride] = 0;
-      data[stride + 1] = 0;
-      data[stride + 2] = 0;
-      data[stride + 3] = 255;
-    }
-  }
-  return data;
 }
