@@ -4,6 +4,7 @@ import "./style.css"
 import { Canvas } from "@react-three/fiber"
 import World from "./World";
 import { PausePlayButton } from "./PausePlayButton";
+import { SizeDropdown } from "./SizeDropdown";
 
 export default function App() {
   const [size, setSize] = useState(200);
@@ -23,17 +24,9 @@ export default function App() {
       <button onClick={() => world.current.Noise()}>noise</button>
       <button onClick={() => world.current.Clear()}>clear</button>
       <button onClick={() => step.current = true}>step</button>
-      <label>
-        Size:{" "}
-        <select value={size} onChange={e => setSize(+e.target.value)}>
-          <option value={10}>10x10</option>
-          <option value={20}>20x20</option>
-          <option value={50}>50x50</option>
-          <option value={100}>100x100</option>
-          <option value={200}>200x200</option>
-          <option value={400}>400x400</option>
-        </select>
-      </label>
+      <SizeDropdown size={size} setSize={setSize} />
     </div>
   );
 }
+
+
