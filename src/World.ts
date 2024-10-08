@@ -12,14 +12,12 @@ export default class World {
         this.changed = true;
     }
 
-    Noise()
-    {
+    Noise() {
         this.state = this.GenWorld(() => Math.random() >= 0.5);
         this.changed = true;
     }
 
-    Clear()
-    {
+    Clear() {
         this.state = this.GenWorld(() => false);
         this.changed = true;
     }
@@ -50,8 +48,16 @@ export default class World {
     CountNeighbors(i: number): number {
         const [x, y] = this.getCoords(i);
         let neighbors = 0;
-        const deltas: [number, number][] = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]];
-        deltas.forEach(([dx, dy]) => { if (this.GetCell(x + dx, y + dy)) { neighbors++; } });
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+                if (dy === 0 && dx === 0) {
+                    continue;
+                }
+                if (this.GetCell(x + dx, y + dy)) {
+                    neighbors++;
+                }
+            }
+        }
         return neighbors;
     }
 
