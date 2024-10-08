@@ -7,12 +7,12 @@ export default class World {
     constructor(width: number, height: number) {
         this.width = width;
         this.height = height;
-        this.state = this.GenWorld(() => Math.random() >= 0.5);
+        this.state = this.GenWorld(() => false);
         this.prevState = [];
         this.changed = true;
     }
 
-    Reset()
+    Noise()
     {
         this.state = this.GenWorld(() => Math.random() >= 0.5);
         this.changed = true;

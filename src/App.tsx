@@ -9,7 +9,7 @@ export default function App() {
   const width = 200;
   const height = 200;
   const world = useRef(new World(width, height))
-  const play = useRef(true);
+  const play = useRef(false);
   const step = useRef(false);
   return (
     <div>
@@ -18,7 +18,7 @@ export default function App() {
         <GameOfLife world={world} play={play} step={step} />
       </Canvas>
       <PausePlayButton play={play} />
-      <button onClick={() => world.current.Reset()}>reset</button>
+      <button onClick={() => world.current.Noise()}>noise</button>
       <button onClick={() => world.current.Clear()}>clear</button>
       <button onClick={() => step.current = true}>step</button>
     </div>
