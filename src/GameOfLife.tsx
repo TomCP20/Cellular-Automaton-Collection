@@ -18,7 +18,7 @@ export function GameOfLife({ world, play, step }: Readonly<{ world: React.Mutabl
         }
 
         if (shaderRef.current) {
-            shaderRef.current.uniforms.uTexture.value.image.data = world.current.GenData();
+            shaderRef.current.uniforms.uTexture.value = new DataTexture(world.current.GenData(), world.current.width, world.current.height);
             shaderRef.current.uniforms.uTexture.value.needsUpdate = true;
             world.current.changed = false;
         }
