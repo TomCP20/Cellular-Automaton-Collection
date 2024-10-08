@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GameOfLife } from "./GameOfLife";
 import "./style.css"
 import { Canvas } from "@react-three/fiber"
@@ -6,11 +6,15 @@ import World from "./World";
 import { PausePlayButton } from "./PausePlayButton";
 
 export default function App() {
+  const [size, setSize] = useState(200);
   const width = 200;
   const height = 200;
   const world = useRef(new World(width, height))
   const play = useRef(false);
   const step = useRef(false);
+  useEffect(() => {
+    world.current = new World(size, size);
+  })
   return (
     <div>
       <h1>Game of Life</h1>
@@ -21,6 +25,17 @@ export default function App() {
       <button onClick={() => world.current.Noise()}>noise</button>
       <button onClick={() => world.current.Clear()}>clear</button>
       <button onClick={() => step.current = true}>step</button>
+      <label>
+        Size:{" "}
+        <select value={size} onChange={e => setSize(+e.target.value)}>
+          <option value={10}>10x10</option>
+          <option value={20}>20x20</option>
+          <option value={50}>50x50</option>
+          <option value={100}>100x100</option>
+          <option value={200}>200x200</option>
+          <option value={512}>512x512</option>
+        </select>
+      </label>
     </div>
   );
 }

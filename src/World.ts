@@ -48,8 +48,7 @@ export default class World {
     }
 
     CountNeighbors(i: number): number {
-        const x = i % this.width;
-        const y = Math.floor(i / this.width);
+        const [x, y] = this.getCoords(i);
         let neighbors = 0;
         const deltas: [number, number][] = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]];
         deltas.forEach(([dx, dy]) => { if (this.GetCell(x + dx, y + dy)) { neighbors++; } });
@@ -73,6 +72,12 @@ export default class World {
 
     getIndex(x: number, y: number): number {
         return (y % this.height) * this.width + (x % this.width);
+    }
+
+    getCoords(i: number): [number, number] {
+        const x = i % this.width;
+        const y = Math.floor(i / this.width);
+        return [x, y]
     }
 
     GenData() {
