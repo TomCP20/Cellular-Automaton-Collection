@@ -19,6 +19,7 @@ export default function App() {
       </Canvas>
       <PausePlayButton play={play} />
       <button onClick={() => world.current.Reset()}>reset</button>
+      <button onClick={() => world.current.Clear()}>clear</button>
       <button onClick={() => step.current = true}>step</button>
     </div>
   );

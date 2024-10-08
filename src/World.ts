@@ -18,11 +18,26 @@ export default class World {
         this.changed = true;
     }
 
+    Clear()
+    {
+        this.state = this.GenBlank();
+        this.changed = true;
+    }
+
     GenState(): boolean[] {
         const size = this.width * this.height;
         const world = [];
         for (let i = 0; i < size; i++) {
             world[i] = Math.random() >= 0.5;
+        }
+        return world;
+    }
+
+    GenBlank(): boolean[] {
+        const size = this.width * this.height;
+        const world = [];
+        for (let i = 0; i < size; i++) {
+            world[i] = false;
         }
         return world;
     }
