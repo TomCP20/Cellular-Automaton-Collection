@@ -31,7 +31,7 @@ export default function App() {
           <option value={50}>50x50</option>
           <option value={100}>100x100</option>
           <option value={200}>200x200</option>
-          <option value={512}>512x512</option>
+          <option value={400}>400x400</option>
         </select>
       </label>
     </div>

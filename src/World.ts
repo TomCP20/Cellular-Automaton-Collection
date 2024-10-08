@@ -1,8 +1,8 @@
 export default class World {
     width: number;
     height: number;
-    state: boolean[];
-    prevState: boolean[];
+    state: boolean[][];
+    prevState: boolean[][];
     changed: boolean;
     constructor(width: number, height: number) {
         this.width = width;
@@ -22,38 +22,52 @@ export default class World {
         this.changed = true;
     }
 
-    GenWorld(f: () => boolean): boolean[] {
-        const size = this.width * this.height;
-        const world = [];
-        for (let i = 0; i < size; i++) {
-            world[i] = f();
+    GenWorld(f: () => boolean): boolean[][] {
+        const world: boolean[][] = [];
+        for (let y = 0; y < this.height; y++) {
+            world[y] = [];
+            for (let x = 0; x < this.width; x++) {
+                world[y][x] = f();
+            }
         }
         return world;
     }
 
     Step() {
-        this.prevState = this.state.slice()
-        for (let i = 0; i < this.state.length; i++) {
-            const neighbors = this.CountNeighbors(i);
-            if (this.prevState[i]) {
-                this.state[i] = neighbors == 2 || neighbors == 3;
-            }
-            else {
-                this.state[i] = neighbors == 3;
+        this.prevState = this.CopyState();
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                const neighbors = this.CountNeighbors(x, y);
+                if (this.prevState[y][x]) {
+                    this.state[y][x] = neighbors == 2 || neighbors == 3;
+                }
+                else {
+                    this.state[y][x] = neighbors == 3;
+                }
             }
         }
         this.changed = true;
     }
 
-    CountNeighbors(i: number): number {
-        const [x, y] = this.getCoords(i);
+    CopyState(): boolean[][] {
+        const copy: boolean[][] = []
+        for (let y = 0; y < this.height; y++) {
+            copy[y] = [];
+            for (let x = 0; x < this.width; x++) {
+                copy[y][x] = this.state[y][x];
+            }
+        }
+        return copy;
+    }
+
+    CountNeighbors(x: number, y: number): number {
         let neighbors = 0;
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
                 if (dy === 0 && dx === 0) {
                     continue;
                 }
-                if (this.GetCell(x + dx, y + dy)) {
+                if (this.prevState[(y + dy + this.height) % this.height][(x + dx + this.width) % this.width]) {
                     neighbors++;
                 }
             }
@@ -61,46 +75,35 @@ export default class World {
         return neighbors;
     }
 
-    GetCell(x: number, y: number): boolean {
-        return this.prevState[this.getIndex(x, y)];
-    }
 
     SetCell(x: number, y: number, cell: boolean) {
-        this.state[this.getIndex(x, y)] = cell;
+        this.state[y][x] = cell;
         this.changed = true;
     }
 
     ToggleCell(x: number, y: number) {
-        const i = this.getIndex(x, y);
-        this.state[i] = !this.state[i];
+        this.state[y][x] = !this.state[y][x];
         this.changed = true;
     }
 
-    getIndex(x: number, y: number): number {
-        return (y % this.height) * this.width + (x % this.width);
-    }
-
-    getCoords(i: number): [number, number] {
-        const x = i % this.width;
-        const y = Math.floor(i / this.width);
-        return [x, y]
-    }
-
     GenData() {
-        const data = new Uint8Array(4 * this.state.length);
-        for (let i = 0; i < this.state.length; i++) {
-            const stride = i * 4;
-            if (this.state[i]) {
-                data[stride] = 255;
-                data[stride + 1] = 255;
-                data[stride + 2] = 255;
-                data[stride + 3] = 255;
-            }
-            else {
-                data[stride] = 0;
-                data[stride + 1] = 0;
-                data[stride + 2] = 0;
-                data[stride + 3] = 255;
+        const data = new Uint8Array(4 * this.width * this.height);
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                const i = y * this.width + x;
+                const stride = i * 4;
+                if (this.state[y][x]) {
+                    data[stride] = 255;
+                    data[stride + 1] = 255;
+                    data[stride + 2] = 255;
+                    data[stride + 3] = 255;
+                }
+                else {
+                    data[stride] = 0;
+                    data[stride + 1] = 0;
+                    data[stride + 2] = 0;
+                    data[stride + 3] = 255;
+                }
             }
         }
         return data;
