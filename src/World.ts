@@ -7,37 +7,28 @@ export default class World {
     constructor(width: number, height: number) {
         this.width = width;
         this.height = height;
-        this.state = this.GenState()
+        this.state = this.GenWorld(() => Math.random() >= 0.5);
         this.prevState = [];
         this.changed = true;
     }
 
     Reset()
     {
-        this.state = this.GenState();
+        this.state = this.GenWorld(() => Math.random() >= 0.5);
         this.changed = true;
     }
 
     Clear()
     {
-        this.state = this.GenBlank();
+        this.state = this.GenWorld(() => false);
         this.changed = true;
     }
 
-    GenState(): boolean[] {
+    GenWorld(f: () => boolean): boolean[] {
         const size = this.width * this.height;
         const world = [];
         for (let i = 0; i < size; i++) {
-            world[i] = Math.random() >= 0.5;
-        }
-        return world;
-    }
-
-    GenBlank(): boolean[] {
-        const size = this.width * this.height;
-        const world = [];
-        for (let i = 0; i < size; i++) {
-            world[i] = false;
+            world[i] = f();
         }
         return world;
     }
