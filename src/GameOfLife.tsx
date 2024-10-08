@@ -1,15 +1,12 @@
-import { DataTexture, ShaderMaterial } from "three";
-import Material from "./Material";
 import World from "./World";
-import { useRef } from "react";
+import { useState } from "react";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 
 export function GameOfLife({ world, play, step }: Readonly<{ world: React.MutableRefObject<World>, play: React.MutableRefObject<boolean>, step: React.MutableRefObject<boolean> }>) {
 
-    const texture = new DataTexture(world.current.GenData(), world.current.width, world.current.height);
+    const [texture, setTexture] = useState(world.current.GenTexture());
+    //let texture = new DataTexture(world.current.GenData(), world.current.width, world.current.height);
     texture.needsUpdate = true;
-
-    const shaderRef = useRef<ShaderMaterial>(null);
 
     useFrame(() => {
         if (play.current || step.current) {
@@ -17,17 +14,17 @@ export function GameOfLife({ world, play, step }: Readonly<{ world: React.Mutabl
             step.current = false
         }
 
-        if (shaderRef.current) {
-            shaderRef.current.uniforms.uTexture.value = new DataTexture(world.current.GenData(), world.current.width, world.current.height);
-            shaderRef.current.uniforms.uTexture.value.needsUpdate = true;
+        if (world.current.changed) {
+            texture.dispose();
+            setTexture(world.current.GenTexture());
+            texture.needsUpdate = true;
             world.current.changed = false;
         }
     });
 
-    function handleClick(e: ThreeEvent<PointerEvent>)
-    {
-        const x = Math.floor(((e.point.x+1)/2)*world.current.width)
-        const y = Math.floor(((e.point.y+1)/2)*world.current.height);
+    function handleClick(e: ThreeEvent<PointerEvent>) {
+        const x = Math.floor(((e.point.x + 1) / 2) * world.current.width)
+        const y = Math.floor(((e.point.y + 1) / 2) * world.current.height);
         world.current.ToggleCell(x, y);
 
     }
@@ -35,7 +32,7 @@ export function GameOfLife({ world, play, step }: Readonly<{ world: React.Mutabl
     return (
         <mesh onPointerDown={handleClick}>
             <planeGeometry args={[2, 2]} />
-            <Material texture={texture} shaderRef={shaderRef} />
+            <meshBasicMaterial map={texture} />
         </mesh>
     );
 }

@@ -1,3 +1,5 @@
+import { DataTexture } from "three";
+
 export default class World {
     width: number;
     height: number;
@@ -86,7 +88,7 @@ export default class World {
         this.changed = true;
     }
 
-    GenData() {
+    GenTexture() {
         const data = new Uint8Array(4 * this.width * this.height);
         for (let y = 0; y < this.height; y++) {
             for (let x = 0; x < this.width; x++) {
@@ -106,6 +108,6 @@ export default class World {
                 }
             }
         }
-        return data;
+        return new DataTexture(data, this.width, this.height);
     }
 }
