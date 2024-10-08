@@ -7,14 +7,12 @@ import { PausePlayButton } from "./PausePlayButton";
 
 export default function App() {
   const [size, setSize] = useState(200);
-  const width = 200;
-  const height = 200;
-  const world = useRef(new World(width, height))
+  const world = useRef(new World(size, size))
   const play = useRef(false);
   const step = useRef(false);
   useEffect(() => {
     world.current = new World(size, size);
-  })
+  }, [size])
   return (
     <div>
       <h1>Game of Life</h1>
