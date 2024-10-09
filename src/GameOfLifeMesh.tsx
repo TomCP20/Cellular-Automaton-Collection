@@ -2,7 +2,7 @@ import World from "./World";
 import { useState } from "react";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 
-export function GameOfLife({ world, play, step }: Readonly<{ world: React.MutableRefObject<World>, play: React.MutableRefObject<boolean>, step: React.MutableRefObject<boolean> }>) {
+export function GameOfLifeMesh({ world, play, step }: Readonly<{ world: React.MutableRefObject<World>, play: React.MutableRefObject<boolean>, step: React.MutableRefObject<boolean> }>) {
 
     const [texture, setTexture] = useState(world.current.GenTexture());
     //let texture = new DataTexture(world.current.GenData(), world.current.width, world.current.height);

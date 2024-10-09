@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GameOfLife } from "./GameOfLife";
+import { GameOfLifeMesh } from "./GameOfLifeMesh";
 import "./style.css"
 import { Canvas } from "@react-three/fiber"
 import World from "./World";
@@ -22,7 +22,7 @@ export default function App() {
         <div className="flex-1 self-center text-center" />
         <div className="size-[800px] text-center self-center">
           <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} >
-            <GameOfLife world={world} play={play} step={step} />
+            <GameOfLifeMesh world={world} play={play} step={step} />
           </Canvas>
         </div>
         <div className="flex-1 self-start text-left verti">
