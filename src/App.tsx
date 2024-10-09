@@ -32,7 +32,6 @@ export default function App() {
           <Button onClick={() => step.current = true}>step</Button><br />
           <SizeDropdown size={size} setSize={setSize} />
         </div>
-
       </div>
     </>
   );
