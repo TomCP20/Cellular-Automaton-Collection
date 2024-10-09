@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GameOfLifeMesh } from "./GameOfLifeMesh";
+import { GameOfLifeMesh } from "./meshes/GameOfLifeMesh";
 import "./style.css"
 import { Canvas } from "@react-three/fiber"
 import World from "./World";

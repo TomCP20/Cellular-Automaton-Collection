@@ -1,4 +1,4 @@
-import World from "./World";
+import World from "../World";
 import { useState } from "react";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 
