@@ -3,6 +3,7 @@ import { WolframCodeMesh } from "../meshes/WolframCodeMesh";
 import { SizeDropdown } from "../components/SizeDropdown";
 import { useState } from "react";
 import { RuleDropdown } from "../components/RuleDropdown";
+import { Button } from "../components/Button";
 
 export function WolframCode() {
     const [rule, setRule] = useState(30);
@@ -17,6 +18,7 @@ export function WolframCode() {
         </div>
         <div className="flex-1 self-start text-left verti">
           <RuleDropdown rule={rule} setRule={setRule}/><br/>
+          <Button onClick={() => setRule(Math.floor(Math.random() * 256))}>Random</Button><br/>
           <SizeDropdown size={size} setSize={setSize}/>
         </div>
       </div>
