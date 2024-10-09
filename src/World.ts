@@ -1,14 +1,12 @@
 import { DataTexture } from "three";
 
 export default class World {
-    width: number;
-    height: number;
+    size: number;
     state: boolean[][];
     prevState: boolean[][];
     changed: boolean;
-    constructor(width: number, height: number) {
-        this.width = width;
-        this.height = height;
+    constructor(size: number) {
+        this.size = size;
         this.state = this.GenWorld(() => false);
         this.prevState = [];
         this.changed = true;
@@ -26,9 +24,9 @@ export default class World {
 
     GenWorld(f: () => boolean): boolean[][] {
         const world: boolean[][] = [];
-        for (let y = 0; y < this.height; y++) {
+        for (let y = 0; y < this.size; y++) {
             world[y] = [];
-            for (let x = 0; x < this.width; x++) {
+            for (let x = 0; x < this.size; x++) {
                 world[y][x] = f();
             }
         }
@@ -37,8 +35,8 @@ export default class World {
 
     Step() {
         this.prevState = this.CopyState();
-        for (let y = 0; y < this.height; y++) {
-            for (let x = 0; x < this.width; x++) {
+        for (let y = 0; y < this.size; y++) {
+            for (let x = 0; x < this.size; x++) {
                 const neighbors = this.CountNeighbors(x, y);
                 if (this.prevState[y][x]) {
                     this.state[y][x] = neighbors == 2 || neighbors == 3;
@@ -53,9 +51,9 @@ export default class World {
 
     CopyState(): boolean[][] {
         const copy: boolean[][] = []
-        for (let y = 0; y < this.height; y++) {
+        for (let y = 0; y < this.size; y++) {
             copy[y] = [];
-            for (let x = 0; x < this.width; x++) {
+            for (let x = 0; x < this.size; x++) {
                 copy[y][x] = this.state[y][x];
             }
         }
@@ -69,7 +67,7 @@ export default class World {
                 if (dy === 0 && dx === 0) {
                     continue;
                 }
-                if (this.prevState[(y + dy + this.height) % this.height][(x + dx + this.width) % this.width]) {
+                if (this.prevState[(y + dy + this.size) % this.size][(x + dx + this.size) % this.size]) {
                     neighbors++;
                 }
             }
@@ -89,10 +87,10 @@ export default class World {
     }
 
     GenTexture() {
-        const data = new Uint8Array(4 * this.width * this.height);
-        for (let y = 0; y < this.height; y++) {
-            for (let x = 0; x < this.width; x++) {
-                const i = y * this.width + x;
+        const data = new Uint8Array(4 * this.size * this.size);
+        for (let y = 0; y < this.size; y++) {
+            for (let x = 0; x < this.size; x++) {
+                const i = y * this.size + x;
                 const stride = i * 4;
                 if (this.state[y][x]) {
                     data[stride] = 255;
@@ -108,6 +106,6 @@ export default class World {
                 }
             }
         }
-        return new DataTexture(data, this.width, this.height);
+        return new DataTexture(data, this.size, this.size);
     }
 }
