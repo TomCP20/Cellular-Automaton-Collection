@@ -30,7 +30,7 @@ export function GameOfLifeMesh({ world, play, step }: Readonly<{ world: React.Mu
     return (
         <mesh onPointerDown={handleClick}>
             <planeGeometry args={[2, 2]} />
-            <meshBasicMaterial map={texture} />
+            <meshBasicMaterial toneMapped={false} map={texture} />
         </mesh>
     );
 }

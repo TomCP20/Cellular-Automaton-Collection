@@ -2,6 +2,7 @@ import "./style.css"
 import { GameOfLife } from "./pages/GameOfLife";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
+import { WolframCode } from "./pages/WolframCode";
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
       <NavBar />
       <Routes>
         <Route path="/" />
+        <Route path="/1d" element={<WolframCode />} />
         <Route path="/2d" element={<GameOfLife />} />
       </Routes>
     </HashRouter>
