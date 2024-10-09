@@ -22,10 +22,9 @@ export function GameOfLifeMesh({ world, play, step }: Readonly<{ world: React.Mu
     });
 
     function handleClick(e: ThreeEvent<PointerEvent>) {
-        const x = Math.floor(((e.point.x + 1) / 2) * world.current.width)
-        const y = Math.floor(((e.point.y + 1) / 2) * world.current.height);
+        const x = Math.floor(((e.point.x + 1) / 2) * world.current.size)
+        const y = Math.floor(((e.point.y + 1) / 2) * world.current.size);
         world.current.ToggleCell(x, y);
-
     }
 
     return (
