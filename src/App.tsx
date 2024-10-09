@@ -3,8 +3,9 @@ import { GameOfLife } from "./GameOfLife";
 import "./style.css"
 import { Canvas } from "@react-three/fiber"
 import World from "./World";
-import { PausePlayButton } from "./PausePlayButton";
-import { SizeDropdown } from "./SizeDropdown";
+import { PausePlayButton } from "./components/PausePlayButton";
+import { SizeDropdown } from "./components/SizeDropdown";
+import { Button } from "./components/Button";
 
 export default function App() {
   const [size, setSize] = useState(200);
@@ -15,17 +16,25 @@ export default function App() {
     world.current = new World(size, size);
   }, [size])
   return (
-    <div>
-      <h1>Game of Life</h1>
-      <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} style={{ background: "black" }}>
-        <GameOfLife world={world} play={play} step={step} />
-      </Canvas>
-      <PausePlayButton play={play} />
-      <button onClick={() => world.current.Noise()}>noise</button>
-      <button onClick={() => world.current.Clear()}>clear</button>
-      <button onClick={() => step.current = true}>step</button>
-      <SizeDropdown size={size} setSize={setSize} />
-    </div>
+    <>
+      <h1 className="text-center">Game of Life</h1>
+      <div className="h-auto flex p-0">
+        <div className="flex-1 self-center text-center" />
+        <div className="size-[800px] text-center self-center">
+          <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} >
+            <GameOfLife world={world} play={play} step={step} />
+          </Canvas>
+        </div>
+        <div className="flex-1 self-start text-left verti">
+          <PausePlayButton play={play} /><br />
+          <Button onClick={() => world.current.Noise()}>noise</Button><br />
+          <Button onClick={() => world.current.Clear()}>clear</Button><br />
+          <Button onClick={() => step.current = true}>step</Button><br />
+          <SizeDropdown size={size} setSize={setSize} />
+        </div>
+
+      </div>
+    </>
   );
 }
 

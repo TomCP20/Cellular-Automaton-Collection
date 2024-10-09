@@ -1,10 +1,3 @@
-h1 {
-    text-align: center;
-}
-
-div {
-    width: 800px;
-    height: 800px;
-    margin: auto;
-    align-self: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
