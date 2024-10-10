@@ -1,3 +1,3 @@
-# Celluar-Automaton-Collection
+# Cellular-Automaton-Collection
 
-Celluar Automaton Collection
+Cellular Automaton Collection
