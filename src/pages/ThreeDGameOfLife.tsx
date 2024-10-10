@@ -3,12 +3,17 @@ import { Canvas } from "@react-three/fiber";
 import { Cubes } from "../meshes/Cubes";
 import { useEffect, useState } from "react";
 import { Button } from "../components/Button";
+import { DropDown } from "../components/DropDown";
 
 export function ThreeDGameOfLife() {
-  const size = 20;
+  const [size, setSize] = useState(20);
   const [world, setWorld] = useState(GenWorld(size))
   const [step, setStep] = useState(false);
   const [play, setPlay] = useState(false);
+
+  useEffect(() => {
+    setWorld(GenWorld(size));
+  }, [size]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,7 +23,7 @@ export function ThreeDGameOfLife() {
       }
     }, 500);
     return () => clearInterval(interval);
-  }, [play, step, world])
+  }, [play, size, step, world])
   return (
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
@@ -38,6 +43,7 @@ export function ThreeDGameOfLife() {
         <Button onClick={() => setPlay(!play)}>{play ? "pause" : "play"}</Button><br />
         <Button onClick={() => setStep(true)} disabled={play}>step</Button><br />
         <Button onClick={() => setWorld(GenWorld(size))}>reset</Button><br />
+        <DropDown val={size} setVal={setSize} vals={[5, 10, 15, 20, 25]} label="Size:" optionLabel={(s) => `${s}x${s}x${s}`} />
       </div>
     </div>
   );

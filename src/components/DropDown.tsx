@@ -2,7 +2,7 @@ export function DropDown({ val, setVal, vals, label, optionLabel }: Readonly<{ v
     return (
         <label className="m-1">
             {label}<br />
-            <select value={val} onChange={e => setVal(+e.target.value)} className="m-1 w-20">
+            <select value={val} onChange={e => setVal(+e.target.value)} className="m-1 min-w-20">
                 {vals.map((s) => <option key={s} value={s}>{optionLabel(s)}</option>)}
             </select>
         </label>
