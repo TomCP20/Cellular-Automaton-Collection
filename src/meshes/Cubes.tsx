@@ -1,11 +1,7 @@
 import { Instance, Instances } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
 import { Color } from "three";
 
-export function Cubes({ size, world, setWorld }: Readonly<{ size: number; world: boolean[][][]; setWorld: React.Dispatch<React.SetStateAction<boolean[][][]>>; }>) {
-  useFrame(() => {
-    setWorld(stepWorld(size, world));
-  })
+export function Cubes({ size, world }: Readonly<{ size: number; world: boolean[][][]; }>) {
   const index = Array.from(Array(size), (_e, i) => { return i });
   return (
     <Instances limit={size * size * size}>
@@ -27,18 +23,4 @@ export function Cubes({ size, world, setWorld }: Readonly<{ size: number; world:
 
 function getPos(n: number, size: number): number {
   return (n - (size - 1) / 2) / size;
-}
-
-function stepWorld(size: number, world: boolean[][][]): boolean[][][] {
-  const newworld: boolean[][][] = Array(size);
-  for (let x = 0; x < size; x++) {
-    newworld[x] = Array(size);
-    for (let y = 0; y < size; y++) {
-      newworld[x][y] = Array(size);
-      for (let z = 0; z < size; z++) {
-        newworld[x][y][z] = !world[x][y][z];
-      }
-    }
-  }
-  return newworld;
 }

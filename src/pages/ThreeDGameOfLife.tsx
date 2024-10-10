@@ -1,18 +1,26 @@
 import { Edges, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Cubes } from "../meshes/Cubes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ThreeDGameOfLife() {
   const size = 10;
   const [world, setWorld] = useState(GenWorld(size))
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWorld(stepWorld(size, world));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [world])
   return (
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
       <div className="size-[800px] text-center self-center">
         <Canvas className="bg-black">
-          <PerspectiveCamera makeDefault position={[-2, -2, -2]} frames={100} />
-          <Cubes size={size} world={world} setWorld={setWorld} />
+          <PerspectiveCamera makeDefault position={[-2, -2, -2]} />
+          <Cubes size={size} world={world} />
           <mesh>
             <boxGeometry />
             <meshBasicMaterial transparent={true} opacity={0} />
@@ -38,4 +46,18 @@ function GenWorld(size: number) {
     }
   }
   return world;
+}
+
+function stepWorld(size: number, world: boolean[][][]): boolean[][][] {
+  const newworld: boolean[][][] = Array(size);
+  for (let x = 0; x < size; x++) {
+    newworld[x] = Array(size);
+    for (let y = 0; y < size; y++) {
+      newworld[x][y] = Array(size);
+      for (let z = 0; z < size; z++) {
+        newworld[x][y][z] = !world[x][y][z];
+      }
+    }
+  }
+  return newworld;
 }
