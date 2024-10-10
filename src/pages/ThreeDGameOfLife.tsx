@@ -2,6 +2,7 @@ import { Edges, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Cubes } from "../meshes/Cubes";
 import { useEffect, useState } from "react";
+import { Button } from "../components/Button";
 
 export function ThreeDGameOfLife() {
   const size = 20;
@@ -28,7 +29,9 @@ export function ThreeDGameOfLife() {
           <OrbitControls />
         </Canvas>
       </div>
-      <div className="flex-1 self-start text-left verti" />
+      <div className="flex-1 self-start text-left verti">
+        <Button onClick={() => setWorld(GenWorld(size))}>reset</Button><br />
+      </div>
     </div>
   );
 }
