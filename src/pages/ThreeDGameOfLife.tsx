@@ -19,7 +19,7 @@ export function ThreeDGameOfLife() {
       <div className="flex-1 self-center text-center" />
       <div className="size-[800px] text-center self-center">
         <Canvas className="bg-black">
-          <PerspectiveCamera makeDefault position={[-2, -2, -2]} />
+          <PerspectiveCamera makeDefault position={[-1.4, -1.4, -1.4]} />
           <Cubes size={size} world={world} />
           <mesh>
             <boxGeometry />
