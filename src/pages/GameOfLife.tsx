@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { GameOfLifeMesh } from "../meshes/GameOfLifeMesh";
+import { GameOfLifeMesh } from "../R3F/GameOfLifeMesh";
 import World from "../World";
 import { Button } from "../components/Button";
 import { SizeDropdown } from "../components/SizeDropdown";
@@ -30,7 +30,7 @@ export function GameOfLife() {
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
       <div className="size-[800px] text-center self-center">
-        <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} className="bg-black">
+      <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} className="bg-black"  gl={{preserveDrawingBuffer: true}}>
           <GameOfLifeMesh world={world} />
         </Canvas>
       </div>

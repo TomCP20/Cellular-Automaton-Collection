@@ -1,6 +1,6 @@
 import { Edges, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Cubes } from "../meshes/Cubes";
+import { Cubes } from "../R3F/Cubes";
 import { useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { DropDown } from "../components/DropDown";
@@ -28,7 +28,7 @@ export function ThreeDGameOfLife() {
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
       <div className="size-[800px] text-center self-center">
-        <Canvas className="bg-black">
+        <Canvas className="bg-black"  gl={{preserveDrawingBuffer: true}}>
           <PerspectiveCamera makeDefault position={[-1.3, 1, -1.3]} />
           <Cubes size={size} world={world} />
           <mesh>

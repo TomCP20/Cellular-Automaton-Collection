@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { WolframCodeMesh } from "../meshes/WolframCodeMesh";
+import { WolframCodeMesh } from "../R3F/WolframCodeMesh";
 import { SizeDropdown } from "../components/SizeDropdown";
 import { useState } from "react";
 import { RuleDropdown } from "../components/RuleDropdown";
@@ -12,7 +12,7 @@ export function WolframCode() {
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
       <div className="size-[800px] text-center self-center">
-        <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} className="bg-black">
+        <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} className="bg-black"  gl={{preserveDrawingBuffer: true}}>
           <WolframCodeMesh size={size} ruleNo={rule} />
         </Canvas>
       </div>
