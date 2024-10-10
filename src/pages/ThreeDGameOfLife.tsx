@@ -11,7 +11,6 @@ export function ThreeDGameOfLife() {
     const interval = setInterval(() => {
       setWorld(stepWorld(size, world));
     }, 500);
-
     return () => clearInterval(interval);
   }, [world])
   return (
