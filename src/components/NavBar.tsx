@@ -6,6 +6,7 @@ export function NavBar() {
       <NavBarElement to={"/"}>Home</NavBarElement>
       <NavBarElement to={"/1d"}>Wolfram Code</NavBarElement>
       <NavBarElement to={"/2d"}>Game Of Life</NavBarElement>
+      <NavBarElement to={"/3d"}>3D Game Of Life</NavBarElement>
     </ul>
   </nav>;
 }
