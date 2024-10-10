@@ -23,9 +23,9 @@ export default class World {
     }
 
     GenWorld(f: () => boolean): boolean[][] {
-        const world: boolean[][] = [];
+        const world: boolean[][] = Array(this.size);
         for (let y = 0; y < this.size; y++) {
-            world[y] = [];
+            world[y] = Array(this.size);
             for (let x = 0; x < this.size; x++) {
                 world[y][x] = f();
             }
@@ -39,10 +39,10 @@ export default class World {
             for (let x = 0; x < this.size; x++) {
                 const neighbors = this.CountNeighbors(x, y);
                 if (this.prevState[y][x]) {
-                    this.state[y][x] = neighbors == 2 || neighbors == 3;
+                    this.state[y][x] = neighbors === 2 || neighbors === 3;
                 }
                 else {
-                    this.state[y][x] = neighbors == 3;
+                    this.state[y][x] = neighbors === 3;
                 }
             }
         }
@@ -50,9 +50,9 @@ export default class World {
     }
 
     CopyState(): boolean[][] {
-        const copy: boolean[][] = []
+        const copy: boolean[][] = Array(this.size)
         for (let y = 0; y < this.size; y++) {
-            copy[y] = [];
+            copy[y] = Array(this.size);
             for (let x = 0; x < this.size; x++) {
                 copy[y][x] = this.state[y][x];
             }
