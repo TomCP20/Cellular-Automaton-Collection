@@ -7,13 +7,18 @@ import { Button } from "../components/Button";
 export function ThreeDGameOfLife() {
   const size = 20;
   const [world, setWorld] = useState(GenWorld(size))
+  const [step, setStep] = useState(false);
+  const [play, setPlay] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWorld(stepWorld(size, world));
+      if (play || step) {
+        setWorld(stepWorld(size, world));
+        setStep(false);
+      }
     }, 500);
     return () => clearInterval(interval);
-  }, [world])
+  }, [play, step, world])
   return (
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
@@ -30,6 +35,8 @@ export function ThreeDGameOfLife() {
         </Canvas>
       </div>
       <div className="flex-1 self-start text-left verti">
+        <Button onClick={() => setPlay(!play)}>{play ? "pause" : "play"}</Button><br />
+        <Button onClick={() => setStep(true)} disabled={play}>step</Button><br />
         <Button onClick={() => setWorld(GenWorld(size))}>reset</Button><br />
       </div>
     </div>

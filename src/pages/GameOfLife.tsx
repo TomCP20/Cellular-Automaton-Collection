@@ -20,7 +20,7 @@ export function GameOfLife() {
     const interval = setInterval(() => {
       if (play || step) {
         world.current.Step();
-        setStep(false)
+        setStep(false);
       }
     }, 100);
     return () => clearInterval(interval);
