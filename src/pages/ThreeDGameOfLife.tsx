@@ -4,7 +4,7 @@ import { Cubes } from "../meshes/Cubes";
 import { useEffect, useState } from "react";
 
 export function ThreeDGameOfLife() {
-  const size = 10;
+  const size = 20;
   const [world, setWorld] = useState(GenWorld(size))
 
   useEffect(() => {
@@ -34,17 +34,18 @@ export function ThreeDGameOfLife() {
   );
 }
 
-function GenWorld(size: number) {
+function GenWorld(size: number): boolean[][][] {
   const world: boolean[][][] = Array(size);
   for (let x = 0; x < size; x++) {
     world[x] = Array(size);
     for (let y = 0; y < size; y++) {
       world[x][y] = Array(size);
       for (let z = 0; z < size; z++) {
-        world[x][y][z] = Math.random() >= 0.5;
+        world[x][y][z] = Math.random() >= 0.75;
       }
     }
   }
+
   return world;
 }
 
@@ -55,9 +56,32 @@ function stepWorld(size: number, world: boolean[][][]): boolean[][][] {
     for (let y = 0; y < size; y++) {
       newworld[x][y] = Array(size);
       for (let z = 0; z < size; z++) {
-        newworld[x][y][z] = !world[x][y][z];
+        const neighbors: number = countNeighbors(size, world, x, y, z);
+        if (world[x][y][z]) {
+          newworld[x][y][z] = (5 <= neighbors && neighbors <= 7);
+        }
+        else {
+          newworld[x][y][z] = (6 <= neighbors && neighbors <= 6);
+        }
       }
     }
   }
   return newworld;
+}
+
+function countNeighbors(size: number, world: boolean[][][], x: number, y: number, z: number) {
+  let neighbors = 0;
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dz = -1; dz <= 1; dz++) {
+        if (dx === 0 && dy === 0 && dz === 0) {
+          continue;
+        }
+        if (world[(x + dx + size) % size][(y + dy + size) % size][(z + dz + size) % size]) {
+          neighbors++;
+        }
+      }
+    }
+  }
+  return neighbors;
 }
