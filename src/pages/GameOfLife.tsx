@@ -1,22 +1,31 @@
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GameOfLifeMesh } from "../meshes/GameOfLifeMesh";
 import World from "../World";
-import { GameOfLifeUI } from "../components/GameOfLifeUI";
+import { Button } from "../components/Button";
+import { SizeDropdown } from "../components/SizeDropdown";
 
 export function GameOfLife() {
   const world = useRef(new World(200));
-  const play = useRef(false);
-  const step = useRef(false);
+  const [step, setStep] = useState(false);
+  const [play, setPlay] = useState(false);
+
+  const [size, setSize] = useState(world.current.size);
+
+  useEffect(() => {
+    world.current = new World(size);
+  }, [size, world]);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      if (play.current || step.current) {
+      if (play || step) {
         world.current.Step();
-        step.current = false
-    }
+        setStep(false)
+      }
     }, 100);
     return () => clearInterval(interval);
-  }, [world])
+  }, [play, step, world])
+
   return (
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
@@ -26,7 +35,11 @@ export function GameOfLife() {
         </Canvas>
       </div>
       <div className="flex-1 self-start text-left verti">
-        <GameOfLifeUI play={play} world={world} step={step} />
+        <Button onClick={() => setPlay(!play)}>{play ? "pause" : "play"}</Button><br />
+        <Button onClick={() => setStep(true)} disabled={play}>step</Button><br />
+        <Button onClick={() => world.current.Noise()}>noise</Button><br />
+        <Button onClick={() => world.current.Clear()}>clear</Button><br />
+        <SizeDropdown size={size} setSize={setSize} />
       </div>
     </div>
   );
