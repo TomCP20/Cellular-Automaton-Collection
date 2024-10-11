@@ -1,6 +1,8 @@
 # Cellular-Automaton-Collection
 
-A Collection of Cellular Automaton
+A Collection of Cellular Automaton.
+
+View on GitHub Pages [here](https://tomcp20.github.io/Cellular-Automaton-Collection/).
 
 ## Included Cellular Automaton
 
