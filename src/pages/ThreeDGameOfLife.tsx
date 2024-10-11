@@ -33,7 +33,7 @@ export function ThreeDGameOfLife() {
           <Cubes size={size} world={world} />
           <mesh>
             <boxGeometry />
-            <meshBasicMaterial transparent={true} opacity={0} />
+            <meshBasicMaterial visible={false} />
             <Edges lineWidth={2} scale={1} threshold={15} color="white" />
           </mesh>
           <OrbitControls />
