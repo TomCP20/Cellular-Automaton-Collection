@@ -1,4 +1,4 @@
-export function DropDown({ val, setVal, vals, label, optionLabel }: Readonly<{ val: number; setVal: React.Dispatch<React.SetStateAction<number>>; vals: number[]; label: string; optionLabel: (s: number) => string; }>) {
+export default function DropDown({ val, setVal, vals, label, optionLabel }: Readonly<{ val: number; setVal: React.Dispatch<React.SetStateAction<number>>; vals: number[]; label: string; optionLabel: (s: number) => string; }>) {
     return (
         <label className="m-1 select-none">
             {label}<br />

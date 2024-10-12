@@ -1,11 +1,11 @@
 import { Canvas } from "@react-three/fiber";
-import { WolframCodeMesh } from "../meshes/WolframCodeMesh";
-import { SizeDropdown } from "../ui/SizeDropdown";
+import WolframCodeMesh from "../meshes/WolframCodeMesh";
+import SizeDropdown from "../ui/SizeDropdown";
 import { useState } from "react";
-import { RuleDropdown } from "../ui/RuleDropdown";
-import { Button } from "../ui/Button";
+import RuleDropdown from "../ui/RuleDropdown";
+import Button from "../ui/Button";
 
-export function WolframCode() {
+export default function WolframCode() {
   const [rule, setRule] = useState(30);
   const [size, setSize] = useState(800);
   return (

@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { MutableRefObject, useEffect, useMemo, useRef } from "react";
 import { Color, InstancedMesh, Object3D } from "three";
 
-export function ThreeDGameOfLifeMesh({ size, world, update }: Readonly<{ size: number; world: boolean[][][]; update: MutableRefObject<boolean>; }>) {
+export default function ThreeDGameOfLifeMesh({ size, world, update }: Readonly<{ size: number; world: boolean[][][]; update: MutableRefObject<boolean>; }>) {
   const meshRef = useRef<InstancedMesh>(null!);
   const tempObject = useMemo(() => new Object3D(), []);
 

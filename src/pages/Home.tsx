@@ -2,7 +2,7 @@ import wolfram from "../images/Wolfram.png";
 import gameoflife from "../images/GameOfLife.png";
 import mazectric from "../images/Mazectric.png";
 import threedgameoflife from "../images/3DGameOfLife.png"
-import { CaptionedImage } from "../ui/CaptionedImage";
+import CaptionedImage from "../ui/CaptionedImage";
 
 export default function Home() {
     return (

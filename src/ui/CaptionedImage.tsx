@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export function CaptionedImage({ imageSrc, title, link, children }: Readonly<{ imageSrc: string; title: string; link: string; children: ReactNode; }>) {
+export default function CaptionedImage({ imageSrc, title, link, children }: Readonly<{ imageSrc: string; title: string; link: string; children: ReactNode; }>) {
     return <>
         <div className=" p-1">
             <h2 className="text-center text-xl">{title}</h2>

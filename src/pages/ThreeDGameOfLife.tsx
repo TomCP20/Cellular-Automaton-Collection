@@ -1,11 +1,11 @@
 import { Edges, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { ThreeDGameOfLifeMesh } from "../meshes/ThreeDGameOfLifeMesh";
+import ThreeDGameOfLifeMesh from "../meshes/ThreeDGameOfLifeMesh";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../ui/Button";
-import { DropDown } from "../ui/DropDown";
+import Button from "../ui/Button";
+import DropDown from "../ui/DropDown";
 
-export function ThreeDGameOfLife() {
+export default function ThreeDGameOfLife() {
   const [size, setSize] = useState(20);
   const [world, setWorld] = useState(GenWorld(size))
   const update = useRef(true);

@@ -1,6 +1,6 @@
 import { DataTexture } from "three";
 
-export function WolframCodeMesh({size, ruleNo}: Readonly<{size: number; ruleNo: number;}>) {
+export default function WolframCodeMesh({size, ruleNo}: Readonly<{size: number; ruleNo: number;}>) {
 
     const rule: boolean[] = [];
     let n = ruleNo;
