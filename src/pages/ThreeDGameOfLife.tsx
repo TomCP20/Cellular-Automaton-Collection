@@ -1,18 +1,20 @@
 import { Edges, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { ThreeDGameOfLifeMesh } from "../meshes/ThreeDGameOfLifeMesh";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { DropDown } from "../components/DropDown";
 
 export function ThreeDGameOfLife() {
   const [size, setSize] = useState(20);
   const [world, setWorld] = useState(GenWorld(size))
+  const update = useRef(true);
   const [step, setStep] = useState(false);
   const [play, setPlay] = useState(false);
 
   useEffect(() => {
     setWorld(GenWorld(size));
+    update.current = true
   }, [size]);
 
   useEffect(() => {
@@ -20,6 +22,7 @@ export function ThreeDGameOfLife() {
       if (play || step) {
         setWorld(stepWorld(size, world));
         setStep(false);
+        update.current = true
       }
     }, 500);
     return () => clearInterval(interval);
@@ -30,7 +33,7 @@ export function ThreeDGameOfLife() {
       <div className="size-[800px] text-center self-center">
         <Canvas className="bg-black"  gl={{preserveDrawingBuffer: true}}>
           <PerspectiveCamera makeDefault position={[-1.3, 1, -1.3]} />
-          <ThreeDGameOfLifeMesh size={size} world={world} />
+          <ThreeDGameOfLifeMesh size={size} world={world} update={update} />
           <mesh>
             <boxGeometry />
             <meshBasicMaterial visible={false} />
