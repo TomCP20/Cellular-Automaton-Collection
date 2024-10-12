@@ -2,8 +2,8 @@ import { Canvas } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { TwoDCellularAutomatonMesh } from "../meshes/TwoDCellularAutomatonMesh";
 import World from "../World";
-import { Button } from "../components/Button";
-import { SizeDropdown } from "../components/SizeDropdown";
+import { Button } from "../ui/Button";
+import { SizeDropdown } from "../ui/SizeDropdown";
 
 export function TwoDCellularAutomaton({ birth, survive }: Readonly<{ birth: number[], survive: number[] }>) {
   const world = useRef(new World(200, birth, survive));
