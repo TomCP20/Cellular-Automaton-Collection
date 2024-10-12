@@ -5,11 +5,15 @@ export default class World {
     state: boolean[][];
     prevState: boolean[][];
     changed: boolean;
-    constructor(size: number) {
+    birth: number[];
+    survive: number[];
+    constructor(size: number, birth: number[], survive: number[]) {
         this.size = size;
         this.state = this.GenWorld(() => false);
         this.prevState = [];
         this.changed = true;
+        this.birth = birth;
+        this.survive = survive;
     }
 
     Noise() {
@@ -39,10 +43,10 @@ export default class World {
             for (let x = 0; x < this.size; x++) {
                 const neighbors = this.CountNeighbors(x, y);
                 if (this.prevState[y][x]) {
-                    this.state[y][x] = neighbors === 2 || neighbors === 3;
+                    this.state[y][x] = this.survive.includes(neighbors);
                 }
                 else {
-                    this.state[y][x] = neighbors === 3;
+                    this.state[y][x] = this.birth.includes(neighbors);
                 }
             }
         }

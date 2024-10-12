@@ -6,14 +6,14 @@ import { Button } from "../components/Button";
 import { SizeDropdown } from "../components/SizeDropdown";
 
 export function GameOfLife() {
-  const world = useRef(new World(200));
+  const world = useRef(new World(200, [3], [2, 3]));
   const [step, setStep] = useState(false);
   const [play, setPlay] = useState(false);
 
   const [size, setSize] = useState(world.current.size);
 
   useEffect(() => {
-    world.current = new World(size);
+    world.current = new World(size, [3], [2, 3]);
   }, [size, world]);
 
   useEffect(() => {
