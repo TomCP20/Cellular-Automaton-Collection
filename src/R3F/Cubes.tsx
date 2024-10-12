@@ -1,10 +1,10 @@
 import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Color, InstancedMesh, Object3D } from "three";
 
 export function Cubes({ size, world }: Readonly<{ size: number; world: boolean[][][]; }>) {
   const meshRef = useRef<InstancedMesh>(null!);
-  const tempObject = new Object3D();
+  const tempObject = useMemo(() => new Object3D(), []);
 
   useEffect(() => {
     if (meshRef == null) return;
@@ -24,7 +24,7 @@ export function Cubes({ size, world }: Readonly<{ size: number; world: boolean[]
       }
     }
     meshRef.current.instanceMatrix.needsUpdate = true;
-  }, [size]);
+  }, [size, tempObject]);
 
   useFrame(() => {
     let i = 0;
@@ -44,7 +44,7 @@ export function Cubes({ size, world }: Readonly<{ size: number; world: boolean[]
     meshRef.current.instanceMatrix.needsUpdate = true;
   })
   return (
-    <instancedMesh ref={meshRef} args={[null, null, size*size*size]}>
+    <instancedMesh ref={meshRef} args={[undefined, undefined, size*size*size]}>
       <boxGeometry args={[1, 1, 1]}></boxGeometry>
       <meshBasicMaterial />
     </instancedMesh>
