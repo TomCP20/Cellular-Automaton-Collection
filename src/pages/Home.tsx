@@ -1,5 +1,6 @@
 import wolfram from "../images/Wolfram.png";
 import gameoflife from "../images/GameOfLife.png";
+import mazectric from "../images/Mazectric.png";
 import threedgameoflife from "../images/3DGameOfLife.png"
 import { ReactNode } from "react";
 
@@ -22,6 +23,13 @@ export default function Home() {
                         <li>Otherwise, the cell dies/remains dead.</li>
                     </ul>
                     These simple rules give rise to complex behaviour such as turning completeness.
+                </CaptionedImage>
+                <CaptionedImage imageSrc={mazectric} title="Maze and Mazectric" link="https://conwaylife.com/wiki/OCA:Maze">
+                    Maze and Mazectric are 2D Celluar Automata similar to the Game Of Life with slight changes to the rules:
+                    <ul className="list-disc list-inside">
+                        <li>In Maze a cell can survive if they have at least 1 and at most 5 neighbours.</li>
+                        <li>In Mazectric a cell can survive if they have at least 1 and at most 4 neighbours.</li>
+                    </ul>
                 </CaptionedImage>
                 <CaptionedImage imageSrc={threedgameoflife} title="3D Game Of Life" link="https://conwaylife.com/wiki/Three-dimensional_cellular_automaton">
                     The 3D Game of Life is a 3D Celluar Automata 3D Game Of Life by Carter Bays in 1987 that attempts to project the rules of The Game of Life to 3 Dimensions.

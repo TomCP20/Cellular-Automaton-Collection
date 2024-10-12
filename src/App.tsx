@@ -13,7 +13,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/1d" element={<WolframCode />} />
-        <Route path="/2d" element={<TwoDCellularAutomaton birth={[3]} survive={[2, 3]} />} />
+        <Route path="/gameoflife" element={<TwoDCellularAutomaton birth={[3]} survive={[2, 3]} />} />
+        <Route path="/maze" element={<TwoDCellularAutomaton birth={[3]} survive={[1, 2, 3, 4, 5]} />} />
+        <Route path="/mazectric" element={<TwoDCellularAutomaton birth={[3]} survive={[1, 2, 3, 4]} />} />
         <Route path="/3d" element={<ThreeDGameOfLife />} />
       </Routes>
     </HashRouter>
