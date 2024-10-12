@@ -1,6 +1,6 @@
 import { Edges, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { ThreeDGameOfLifeMesh } from "../R3F/Cubes";
+import { ThreeDGameOfLifeMesh } from "../meshes/ThreeDGameOfLifeMesh";
 import { useEffect, useState } from "react";
 import { Button } from "../components/Button";
 import { DropDown } from "../components/DropDown";

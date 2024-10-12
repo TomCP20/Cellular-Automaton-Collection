@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { WolframCodeMesh } from "../R3F/WolframCodeMesh";
+import { WolframCodeMesh } from "../meshes/WolframCodeMesh";
 import { SizeDropdown } from "../components/SizeDropdown";
 import { useState } from "react";
 import { RuleDropdown } from "../components/RuleDropdown";
