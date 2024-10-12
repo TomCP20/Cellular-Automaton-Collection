@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import { Color, InstancedMesh, Object3D } from "three";
 
-export function Cubes({ size, world }: Readonly<{ size: number; world: boolean[][][]; }>) {
+export function ThreeDGameOfLifeMesh({ size, world }: Readonly<{ size: number; world: boolean[][][]; }>) {
   const meshRef = useRef<InstancedMesh>(null!);
   const tempObject = useMemo(() => new Object3D(), []);
 
