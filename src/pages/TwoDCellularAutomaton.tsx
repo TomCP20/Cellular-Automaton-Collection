@@ -1,20 +1,20 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { GameOfLifeMesh } from "../R3F/GameOfLifeMesh";
+import { TwoDCellularAutomatonMesh } from "../R3F/TwoDCellularAutomatonMesh";
 import World from "../World";
 import { Button } from "../components/Button";
 import { SizeDropdown } from "../components/SizeDropdown";
 
-export function GameOfLife() {
-  const world = useRef(new World(200, [3], [2, 3]));
+export function TwoDCellularAutomaton({ birth, survive }: Readonly<{ birth: number[], survive: number[] }>) {
+  const world = useRef(new World(200, birth, survive));
   const [step, setStep] = useState(false);
   const [play, setPlay] = useState(false);
 
   const [size, setSize] = useState(world.current.size);
 
   useEffect(() => {
-    world.current = new World(size, [3], [2, 3]);
-  }, [size, world]);
+    world.current = new World(size, birth, survive);
+  }, [size, world, birth, survive]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,8 +30,8 @@ export function GameOfLife() {
     <div className="h-auto flex p-0">
       <div className="flex-1 self-center text-center" />
       <div className="size-[800px] text-center self-center">
-      <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} className="bg-black"  gl={{preserveDrawingBuffer: true}}>
-          <GameOfLifeMesh world={world} />
+        <Canvas orthographic camera={{ left: -1, right: 1, bottom: -1, top: 1 }} className="bg-black" gl={{ preserveDrawingBuffer: true }}>
+          <TwoDCellularAutomatonMesh world={world} />
         </Canvas>
       </div>
       <div className="flex-1 self-start text-left verti">

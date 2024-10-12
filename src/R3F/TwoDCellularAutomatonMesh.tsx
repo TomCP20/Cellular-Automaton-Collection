@@ -2,7 +2,7 @@ import World from "../World";
 import { useState } from "react";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 
-export function GameOfLifeMesh({ world}: Readonly<{ world: React.MutableRefObject<World> }>) {
+export function TwoDCellularAutomatonMesh({ world}: Readonly<{ world: React.MutableRefObject<World> }>) {
 
     const [texture, setTexture] = useState(world.current.GenTexture());
     texture.needsUpdate = true;
