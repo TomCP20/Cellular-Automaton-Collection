@@ -47,5 +47,4 @@ function UpdateMesh(size: number, tempObject: Object3D, world: boolean[][][], me
   if (meshRef.current.instanceColor) {
     meshRef.current.instanceColor.needsUpdate = true
   }
-
 }
