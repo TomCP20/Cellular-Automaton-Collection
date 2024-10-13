@@ -31,17 +31,24 @@ function UpdateMesh(size: number, tempObject: Object3D, world: boolean[][][], me
   for (let x = 0; x < size; x++) {
     for (let y = 0; y < size; y++) {
       for (let z = 0; z < size; z++) {
-        const id = i++;
-        tempObject.position.set(getPos(x, size), getPos(y, size), getPos(z, size));
-        const scale = world[x][y][z] ? 1 / size : 0;
-        tempObject.scale.set(scale, scale, scale);
-        tempObject.updateMatrix();
-        meshRef.current.setMatrixAt(id, tempObject.matrix);
-        meshRef.current.setColorAt(id, new Color(x / size, y / size, z / size));
+        if (world[x][y][z]) {
+          tempObject.position.set(getPos(x, size), getPos(y, size), getPos(z, size));
+          const scale = 1 / size;
+          tempObject.scale.set(scale, scale, scale);
+          tempObject.updateMatrix();
+          meshRef.current.setMatrixAt(i, tempObject.matrix);
+          meshRef.current.setColorAt(i, new Color((x / size) % 1, y / size, z / size));
+          i++;
+        }
       }
     }
   }
+  meshRef.current.count = i;
   meshRef.current.instanceMatrix.needsUpdate = true;
+  if (meshRef.current.instanceColor) {
+    meshRef.current.instanceColor.needsUpdate = true
+  }
+
 }
 
 function getPos(n: number, size: number): number {
