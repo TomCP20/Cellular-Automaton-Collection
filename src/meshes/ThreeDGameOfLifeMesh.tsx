@@ -5,6 +5,7 @@ import { Color, InstancedMesh, Object3D } from "three";
 export default function ThreeDGameOfLifeMesh({ size, world, update }: Readonly<{ size: number; world: boolean[][][]; update: MutableRefObject<boolean>; }>) {
   const meshRef = useRef<InstancedMesh>(null!);
   const tempObject = useMemo(() => new Object3D(), []);
+  const offset = (1/(size*2)) + (-1/2);
 
   useEffect(() => {
     if (meshRef == null) return;
@@ -19,7 +20,7 @@ export default function ThreeDGameOfLifeMesh({ size, world, update }: Readonly<{
     }
   })
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, size * size * size]}>
+    <instancedMesh ref={meshRef} args={[undefined, undefined, size * size * size]} scale={1/size} position={[offset, offset, offset]}>
       <boxGeometry args={[1, 1, 1]}></boxGeometry>
       <meshBasicMaterial />
     </instancedMesh>
@@ -32,12 +33,10 @@ function UpdateMesh(size: number, tempObject: Object3D, world: boolean[][][], me
     for (let y = 0; y < size; y++) {
       for (let z = 0; z < size; z++) {
         if (world[x][y][z]) {
-          tempObject.position.set(getPos(x, size), getPos(y, size), getPos(z, size));
-          const scale = 1 / size;
-          tempObject.scale.set(scale, scale, scale);
+          tempObject.position.set(x, y, z);
           tempObject.updateMatrix();
           meshRef.current.setMatrixAt(i, tempObject.matrix);
-          meshRef.current.setColorAt(i, new Color((x / size) % 1, y / size, z / size));
+          meshRef.current.setColorAt(i, new Color(x / size, y / size, z / size));
           i++;
         }
       }
@@ -49,8 +48,4 @@ function UpdateMesh(size: number, tempObject: Object3D, world: boolean[][][], me
     meshRef.current.instanceColor.needsUpdate = true
   }
 
-}
-
-function getPos(n: number, size: number): number {
-  return (n - (size - 1) / 2) / size;
 }
