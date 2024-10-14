@@ -42,7 +42,7 @@ export default function ThreeDGameOfLife() {
         <Button onClick={() => setPlay(!play)}>{play ? "pause" : "play"}</Button><br />
         <Button onClick={() => setStep(true)} disabled={play}>step</Button><br />
         <Button onClick={() => world.GenWorld()}>reset</Button><br />
-        <DropDown val={size} setVal={setSize} vals={[5, 10, 15, 20, 25, 30, 40, 50]} label="Size:" optionLabel={(s) => `${s}x${s}x${s}`} />
+        <DropDown val={size} setVal={setSize} vals={[5, 10, 15, 20, 25, 30, 40, 50, 75, 100]} label="Size:" optionLabel={(s) => `${s}x${s}x${s}`} />
       </div>
     </div>
   );
