@@ -21,7 +21,7 @@ export default function ThreeDGameOfLife() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (play || step) {
-        world.stepWorld();
+        world.Step();
         setStep(false);
       }
     }, 500);

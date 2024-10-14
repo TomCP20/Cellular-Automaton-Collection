@@ -1,17 +1,11 @@
 import { DataTexture } from "three";
+import World from "./World";
 
-export default class TwoDWorld {
-    size: number;
-    state: boolean[];
-    prevState: boolean[];
-    changed: boolean;
+export default class TwoDWorld extends World {
     birth: number[];
     survive: number[];
     constructor(size: number, birth: number[], survive: number[]) {
-        this.size = size;
-        this.state = Array(this.size * this.size);
-        this.prevState = Array(this.size * this.size);
-        this.changed = true;
+        super(size, size*size)
         this.birth = birth;
         this.survive = survive;
     }
@@ -64,11 +58,6 @@ export default class TwoDWorld {
         }
         return neighbors;
     }
-
-    mod(n: number) {
-        return (n + this.size) % this.size;
-    }
-
 
     SetCell(x: number, y: number, cell: boolean) {
         this.state[this.getIndex(x, y)] = cell;

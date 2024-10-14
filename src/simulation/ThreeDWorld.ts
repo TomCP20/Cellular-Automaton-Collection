@@ -1,13 +1,8 @@
-export default class ThreeDWorld {
-  size: number;
-  state: boolean[];
-  prevState: boolean[];
-  changed: boolean;
+import World from "./World";
+
+export default class ThreeDWorld extends World {
   constructor(size: number) {
-    this.size = size;
-    this.state = Array(this.size * this.size * this.size);
-    this.prevState = Array(this.size * this.size * this.size);
-    this.changed = true;
+    super(size, size*size*size)
     this.GenWorld();
   }
 
@@ -34,7 +29,7 @@ export default class ThreeDWorld {
           if (dx === 0 && dy === 0 && dz === 0) {
             continue;
           }
-          const i = this.GetIndex((x + dx + this.size) % this.size, (y + dy + this.size) % this.size, (z + dz + this.size) % this.size)
+          const i = this.GetIndex(this.mod(x + dx), this.mod(y + dy), this.mod(z + dz))
           if (this.prevState[i]) {
             neighbors++;
           }
@@ -44,7 +39,7 @@ export default class ThreeDWorld {
     return neighbors;
   }
 
-  stepWorld() {
+  Step() {
     this.prevState = this.state.splice(0);
     for (let x = 0; x < this.size; x++) {
       for (let y = 0; y < this.size; y++) {
