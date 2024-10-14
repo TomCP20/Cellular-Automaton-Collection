@@ -2,7 +2,7 @@ import World from "./World";
 
 export default class ThreeDWorld extends World {
   constructor(size: number) {
-    super(size, size*size*size)
+    super(size, size * size * size)
     this.GenWorld();
   }
 
@@ -18,10 +18,18 @@ export default class ThreeDWorld extends World {
   }
 
   GetIndex(x: number, y: number, z: number) {
-    return x*this.size*this.size + y*this.size + z;
+    return x * this.size * this.size + y * this.size + z;
   }
 
-  countNeighbors(x: number, y: number, z: number) {
+  GetCoords(i: number): [number, number, number] {
+    const x = Math.floor(i / (this.size * this.size));
+    const y = Math.floor((i % (this.size * this.size)) / this.size);
+    const z = i % (this.size);
+    return [x, y, z];
+  }
+
+  countNeighbors(i: number) {
+    const [x, y, z] = this.GetCoords(i);
     let neighbors = 0;
     for (let dx = -1; dx <= 1; dx++) {
       for (let dy = -1; dy <= 1; dy++) {
@@ -41,19 +49,15 @@ export default class ThreeDWorld extends World {
 
   Step() {
     this.prevState = this.state.splice(0);
-    for (let x = 0; x < this.size; x++) {
-      for (let y = 0; y < this.size; y++) {
-        for (let z = 0; z < this.size; z++) {
-          const i = this.GetIndex(x, y, z)
-          const neighbors: number = this.countNeighbors(x, y, z);
-          if (this.prevState[i]) {
-            this.state[i] = (5 <= neighbors && neighbors <= 7);
-          }
-          else {
-            this.state[i] = (6 <= neighbors && neighbors <= 6);
-          }
-        }
+    for (let i = 0; i < this.size * this.size * this.size; i++) {
+      const neighbors: number = this.countNeighbors(i);
+      if (this.prevState[i]) {
+        this.state[i] = (5 <= neighbors && neighbors <= 7);
       }
+      else {
+        this.state[i] = (6 <= neighbors && neighbors <= 6);
+      }
+
     }
     this.changed = true;
   }
