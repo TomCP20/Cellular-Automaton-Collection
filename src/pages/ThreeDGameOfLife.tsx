@@ -1,30 +1,28 @@
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import ThreeDGameOfLifeMesh from "../meshes/ThreeDGameOfLifeMesh";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import DropDown from "../ui/DropDown";
 import WireBox from "../meshes/WireBox";
+import ThreeDWorld from "../ThreeDWorld";
 
 export default function ThreeDGameOfLife() {
   const [size, setSize] = useState(20);
-  const [world, setWorld] = useState(GenWorld(size))
-  const update = useRef(true);
+  const [world, setWorld] = useState(new ThreeDWorld(size))
   const [step, setStep] = useState(false);
   const [play, setPlay] = useState(false);
   
 
   useEffect(() => {
-    setWorld(GenWorld(size));
-    update.current = true
+    setWorld(new ThreeDWorld(size));
   }, [size]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (play || step) {
-        setWorld(stepWorld(size, world));
+        world.stepWorld();
         setStep(false);
-        update.current = true
       }
     }, 500);
     return () => clearInterval(interval);
@@ -35,7 +33,7 @@ export default function ThreeDGameOfLife() {
       <div className="size-[800px] text-center self-center">
         <Canvas className="bg-black"  gl={{preserveDrawingBuffer: true}}>
           <PerspectiveCamera makeDefault position={[-1.3, 1, -1.3]} />
-          <ThreeDGameOfLifeMesh size={size} world={world} update={update} />
+          <ThreeDGameOfLifeMesh size={size} world={world} />
           <WireBox />
           <OrbitControls />
         </Canvas>
@@ -43,62 +41,9 @@ export default function ThreeDGameOfLife() {
       <div className="flex-1 self-start text-left verti">
         <Button onClick={() => setPlay(!play)}>{play ? "pause" : "play"}</Button><br />
         <Button onClick={() => setStep(true)} disabled={play}>step</Button><br />
-        <Button onClick={() => setWorld(GenWorld(size))}>reset</Button><br />
+        <Button onClick={() => world.GenWorld()}>reset</Button><br />
         <DropDown val={size} setVal={setSize} vals={[5, 10, 15, 20, 25, 30, 40, 50]} label="Size:" optionLabel={(s) => `${s}x${s}x${s}`} />
       </div>
     </div>
   );
-}
-
-function GenWorld(size: number): boolean[] {
-  const world: boolean[] = Array(size*size*size);
-  for (let x = 0; x < size; x++) {
-    for (let y = 0; y < size; y++) {
-      for (let z = 0; z < size; z++) {
-        world[GetIndex(size, x, y, z)] = Math.random() >= 0.75;
-      }
-    }
-  }
-
-  return world;
-}
-
-function GetIndex(size: number, x: number, y: number, z: number) {
-  return x*size*size + y*size + z;
-}
-
-function stepWorld(size: number, world: boolean[]): boolean[] {
-  const newworld: boolean[] = Array(size*size*size);
-  for (let x = 0; x < size; x++) {
-    for (let y = 0; y < size; y++) {
-      for (let z = 0; z < size; z++) {
-        const neighbors: number = countNeighbors(size, world, x, y, z);
-        if (world[GetIndex(size, x, y, z)]) {
-          newworld[GetIndex(size, x, y, z)] = (5 <= neighbors && neighbors <= 7);
-        }
-        else {
-          newworld[GetIndex(size, x, y, z)] = (6 <= neighbors && neighbors <= 6);
-        }
-      }
-    }
-  }
-  return newworld;
-}
-
-function countNeighbors(size: number, world: boolean[], x: number, y: number, z: number) {
-  let neighbors = 0;
-  for (let dx = -1; dx <= 1; dx++) {
-    for (let dy = -1; dy <= 1; dy++) {
-      for (let dz = -1; dz <= 1; dz++) {
-        if (dx === 0 && dy === 0 && dz === 0) {
-          continue;
-        }
-        const i = GetIndex(size, (x + dx + size) % size, (y + dy + size) % size, (z + dz + size) % size)
-        if (world[i]) {
-          neighbors++;
-        }
-      }
-    }
-  }
-  return neighbors;
 }

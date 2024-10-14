@@ -33,9 +33,7 @@ export default class World {
     }
 
     Step() {
-        const temp = this.prevState;
-        this.prevState = this.state;
-        this.state = temp;
+        this.prevState = this.state.splice(0);
         for (let y = 0; y < this.size; y++) {
             for (let x = 0; x < this.size; x++) {
                 const i = this.getIndex(x, y);
