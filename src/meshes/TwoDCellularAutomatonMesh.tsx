@@ -1,4 +1,4 @@
-import TwoDWorld from "../TwoDWorld";
+import TwoDWorld from "../simulation/TwoDWorld";
 import { MutableRefObject, useState } from "react";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 

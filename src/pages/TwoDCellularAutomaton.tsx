@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import TwoDCellularAutomatonMesh from "../meshes/TwoDCellularAutomatonMesh";
-import TwoDWorld from "../TwoDWorld";
+import TwoDWorld from "../simulation/TwoDWorld";
 import Button from "../ui/Button";
 import SizeDropdown from "../ui/SizeDropdown";
 

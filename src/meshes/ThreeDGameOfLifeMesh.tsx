@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import { MutableRefObject, useEffect, useMemo, useRef } from "react";
 import { Color, InstancedMesh, Object3D } from "three";
-import ThreeDWorld from "../ThreeDWorld";
+import ThreeDWorld from "../simulation/ThreeDWorld";
 
 export default function ThreeDGameOfLifeMesh({ size, world }: Readonly<{ size: number; world: ThreeDWorld; }>) {
   const meshRef = useRef<InstancedMesh>(null!);

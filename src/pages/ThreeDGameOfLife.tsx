@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import DropDown from "../ui/DropDown";
 import WireBox from "../meshes/WireBox";
-import ThreeDWorld from "../ThreeDWorld";
+import ThreeDWorld from "../simulation/ThreeDWorld";
 
 export default function ThreeDGameOfLife() {
   const [size, setSize] = useState(20);
