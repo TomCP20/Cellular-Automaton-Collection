@@ -33,7 +33,7 @@ function UpdateMesh(size: number, tempObject: Object3D, world: ThreeDWorld, mesh
   for (let x = 0; x < size; x++) {
     for (let y = 0; y < size; y++) {
       for (let z = 0; z < size; z++) {
-        const worldindex = x*size*size + y*size + z;
+        const worldindex = world.GetIndex(x, y, z);
         if (world.state[worldindex]) {
           tempObject.position.set(x, y, z);
           tempObject.updateMatrix();
