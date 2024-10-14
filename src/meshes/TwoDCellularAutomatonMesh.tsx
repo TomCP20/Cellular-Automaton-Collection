@@ -1,8 +1,8 @@
-import World from "../World";
+import TwoDWorld from "../TwoDWorld";
 import { MutableRefObject, useState } from "react";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 
-export default function TwoDCellularAutomatonMesh({ world}: Readonly<{ world: MutableRefObject<World> }>) {
+export default function TwoDCellularAutomatonMesh({ world}: Readonly<{ world: MutableRefObject<TwoDWorld> }>) {
 
     const [texture, setTexture] = useState(world.current.GenTexture());
     texture.needsUpdate = true;

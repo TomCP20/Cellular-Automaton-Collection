@@ -1,6 +1,6 @@
 import { DataTexture } from "three";
 
-export default class World {
+export default class TwoDWorld {
     size: number;
     state: boolean[];
     prevState: boolean[];

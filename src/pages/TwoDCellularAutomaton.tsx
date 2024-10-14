@@ -1,19 +1,19 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import TwoDCellularAutomatonMesh from "../meshes/TwoDCellularAutomatonMesh";
-import World from "../World";
+import TwoDWorld from "../TwoDWorld";
 import Button from "../ui/Button";
 import SizeDropdown from "../ui/SizeDropdown";
 
 export default function TwoDCellularAutomaton({ birth, survive }: Readonly<{ birth: number[], survive: number[] }>) {
-  const world = useRef(new World(200, birth, survive));
+  const world = useRef(new TwoDWorld(200, birth, survive));
   const [step, setStep] = useState(false);
   const [play, setPlay] = useState(false);
 
   const [size, setSize] = useState(world.current.size);
 
   useEffect(() => {
-    world.current = new World(size, birth, survive);
+    world.current = new TwoDWorld(size, birth, survive);
   }, [size, world, birth, survive]);
 
   useEffect(() => {
