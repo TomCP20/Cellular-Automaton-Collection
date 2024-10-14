@@ -50,14 +50,12 @@ export default function ThreeDGameOfLife() {
   );
 }
 
-function GenWorld(size: number): boolean[][][] {
-  const world: boolean[][][] = Array(size);
+function GenWorld(size: number): boolean[] {
+  const world: boolean[] = Array(size*size*size);
   for (let x = 0; x < size; x++) {
-    world[x] = Array(size);
     for (let y = 0; y < size; y++) {
-      world[x][y] = Array(size);
       for (let z = 0; z < size; z++) {
-        world[x][y][z] = Math.random() >= 0.75;
+        world[GetIndex(size, x, y, z)] = Math.random() >= 0.75;
       }
     }
   }
@@ -65,19 +63,21 @@ function GenWorld(size: number): boolean[][][] {
   return world;
 }
 
-function stepWorld(size: number, world: boolean[][][]): boolean[][][] {
-  const newworld: boolean[][][] = Array(size);
+function GetIndex(size: number, x: number, y: number, z: number) {
+  return x*size*size + y*size + z;
+}
+
+function stepWorld(size: number, world: boolean[]): boolean[] {
+  const newworld: boolean[] = Array(size*size*size);
   for (let x = 0; x < size; x++) {
-    newworld[x] = Array(size);
     for (let y = 0; y < size; y++) {
-      newworld[x][y] = Array(size);
       for (let z = 0; z < size; z++) {
         const neighbors: number = countNeighbors(size, world, x, y, z);
-        if (world[x][y][z]) {
-          newworld[x][y][z] = (5 <= neighbors && neighbors <= 7);
+        if (world[GetIndex(size, x, y, z)]) {
+          newworld[GetIndex(size, x, y, z)] = (5 <= neighbors && neighbors <= 7);
         }
         else {
-          newworld[x][y][z] = (6 <= neighbors && neighbors <= 6);
+          newworld[GetIndex(size, x, y, z)] = (6 <= neighbors && neighbors <= 6);
         }
       }
     }
@@ -85,7 +85,7 @@ function stepWorld(size: number, world: boolean[][][]): boolean[][][] {
   return newworld;
 }
 
-function countNeighbors(size: number, world: boolean[][][], x: number, y: number, z: number) {
+function countNeighbors(size: number, world: boolean[], x: number, y: number, z: number) {
   let neighbors = 0;
   for (let dx = -1; dx <= 1; dx++) {
     for (let dy = -1; dy <= 1; dy++) {
@@ -93,7 +93,8 @@ function countNeighbors(size: number, world: boolean[][][], x: number, y: number
         if (dx === 0 && dy === 0 && dz === 0) {
           continue;
         }
-        if (world[(x + dx + size) % size][(y + dy + size) % size][(z + dz + size) % size]) {
+        const i = GetIndex(size, (x + dx + size) % size, (y + dy + size) % size, (z + dz + size) % size)
+        if (world[i]) {
           neighbors++;
         }
       }

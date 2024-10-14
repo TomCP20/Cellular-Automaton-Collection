@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { MutableRefObject, useEffect, useMemo, useRef } from "react";
 import { Color, InstancedMesh, Object3D } from "three";
 
-export default function ThreeDGameOfLifeMesh({ size, world, update }: Readonly<{ size: number; world: boolean[][][]; update: MutableRefObject<boolean>; }>) {
+export default function ThreeDGameOfLifeMesh({ size, world, update }: Readonly<{ size: number; world: boolean[]; update: MutableRefObject<boolean>; }>) {
   const meshRef = useRef<InstancedMesh>(null!);
   const tempObject = useMemo(() => new Object3D(), []);
   const offset = (1/(size*2)) + (-1/2);
@@ -27,12 +27,13 @@ export default function ThreeDGameOfLifeMesh({ size, world, update }: Readonly<{
   );
 }
 
-function UpdateMesh(size: number, tempObject: Object3D, world: boolean[][][], meshRef: MutableRefObject<InstancedMesh>) {
+function UpdateMesh(size: number, tempObject: Object3D, world: boolean[], meshRef: MutableRefObject<InstancedMesh>) {
   let i = 0;
   for (let x = 0; x < size; x++) {
     for (let y = 0; y < size; y++) {
       for (let z = 0; z < size; z++) {
-        if (world[x][y][z]) {
+        const worldindex = x*size*size + y*size + z;
+        if (world[worldindex]) {
           tempObject.position.set(x, y, z);
           tempObject.updateMatrix();
           meshRef.current.setMatrixAt(i, tempObject.matrix);
