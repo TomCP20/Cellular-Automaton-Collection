@@ -16,9 +16,8 @@ export default class World {
         this.survive = survive;
     }
 
-    getIndex(x: number, y: number)
-    {
-        return y*this.size+x;
+    getIndex(x: number, y: number) {
+        return y * this.size + x;
     }
 
     Noise() {
@@ -32,8 +31,8 @@ export default class World {
     }
 
     GenWorld(f: () => boolean): boolean[] {
-        const world: boolean[] = Array(this.size*this.size);
-        for (let i = 0; i < this.size*this.size; i++) {
+        const world: boolean[] = Array(this.size * this.size);
+        for (let i = 0; i < this.size * this.size; i++) {
             world[i] = f();
         }
         return world;
@@ -65,13 +64,17 @@ export default class World {
                 if (dy === 0 && dx === 0) {
                     continue;
                 }
-                const i = ((y + dy + this.size) % this.size)*this.size+((x + dx + this.size) % this.size);
+                const i = this.getIndex(this.mod(x + dx), this.mod(y + dy));
                 if (this.prevState[i]) {
                     neighbors++;
                 }
             }
         }
         return neighbors;
+    }
+
+    mod(n: number) {
+        return (n + this.size) % this.size;
     }
 
 
