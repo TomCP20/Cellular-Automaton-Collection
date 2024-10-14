@@ -27,7 +27,7 @@ export default class TwoDWorld extends World {
     }
 
     Step() {
-        this.prevState = this.state.splice(0);
+        this.swap();
         for (let y = 0; y < this.size; y++) {
             for (let x = 0; x < this.size; x++) {
                 const i = this.getIndex(x, y);

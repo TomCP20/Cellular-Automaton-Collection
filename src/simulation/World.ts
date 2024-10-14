@@ -15,4 +15,10 @@ export default abstract class World {
     mod(n: number) {
         return (n + this.size) % this.size;
     }
+
+    swap() {
+        const temp = this.prevState;
+        this.prevState = this.state;
+        this.state = temp;
+    }
 }

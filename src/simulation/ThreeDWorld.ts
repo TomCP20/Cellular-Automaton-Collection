@@ -48,7 +48,7 @@ export default class ThreeDWorld extends World {
   }
 
   Step() {
-    this.prevState = this.state.splice(0);
+    this.swap();
     for (let i = 0; i < this.size * this.size * this.size; i++) {
       const neighbors: number = this.countNeighbors(i);
       if (this.prevState[i]) {
