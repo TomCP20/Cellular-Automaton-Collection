@@ -9,8 +9,8 @@ export default class World {
     survive: number[];
     constructor(size: number, birth: number[], survive: number[]) {
         this.size = size;
-        this.state = this.GenWorld(() => false);
-        this.prevState = [];
+        this.state = Array(this.size * this.size);
+        this.prevState = Array(this.size * this.size);
         this.changed = true;
         this.birth = birth;
         this.survive = survive;
@@ -21,21 +21,15 @@ export default class World {
     }
 
     Noise() {
-        this.state = this.GenWorld(() => Math.random() >= 0.5);
+        for (let i = 0; i < this.size * this.size; i++) {
+            this.state[i] = Math.random() >= 0.5;
+        }
         this.changed = true;
     }
 
     Clear() {
-        this.state = this.GenWorld(() => false);
+        this.state = Array(this.size * this.size);
         this.changed = true;
-    }
-
-    GenWorld(f: () => boolean): boolean[] {
-        const world: boolean[] = Array(this.size * this.size);
-        for (let i = 0; i < this.size * this.size; i++) {
-            world[i] = f();
-        }
-        return world;
     }
 
     Step() {
