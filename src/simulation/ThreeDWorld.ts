@@ -37,8 +37,8 @@ export default class ThreeDWorld extends World {
           if (dx === 0 && dy === 0 && dz === 0) {
             continue;
           }
-          const i = this.GetIndex(this.mod(x + dx), this.mod(y + dy), this.mod(z + dz))
-          if (this.prevState[i]) {
+          const neighbori = this.GetIndex(this.mod(x + dx), this.mod(y + dy), this.mod(z + dz))
+          if (this.prevState[neighbori]) {
             neighbors++;
           }
         }
@@ -57,7 +57,6 @@ export default class ThreeDWorld extends World {
       else {
         this.state[i] = (6 <= neighbors && neighbors <= 6);
       }
-
     }
     this.changed = true;
   }
