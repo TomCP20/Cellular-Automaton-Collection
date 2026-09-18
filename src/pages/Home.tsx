@@ -22,7 +22,7 @@ export default function Home() {
                         <li>An alive cell stays alive if it has 2 or 3 neighbours.</li>
                         <li>Otherwise, the cell dies/remains dead.</li>
                     </ul>
-                    These simple rules give rise to complex behaviour such as turning completeness.
+                    These simple rules give rise to complex behaviour such as Turing completeness.
                 </CaptionedImage>
                 <CaptionedImage imageSrc={mazectric} title="Maze and Mazectric" link="https://conwaylife.com/wiki/OCA:Maze">
                     Maze and Mazectric are 2D Celluar Automata similar to the Game Of Life with slight changes to the rules:
